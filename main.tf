@@ -1,5 +1,6 @@
 terraform {
     required_version = ">= 1.9, < 2.0"
+    
     backend "s3" {
         bucket = "beemsa-terraform-state-bucket"
         key = "terraform.tfstate"
@@ -11,13 +12,6 @@ terraform {
 
 provider "aws" {
     region = var.region_kr
-}
-
-module "dynamodb" {
-    source = "./modules/dynamodb"
-
-    terraform_lock_table_name = "terraform_lock_table"
-    table_hash_key = "LockID"
 }
 
 module "vpc" {
@@ -310,7 +304,6 @@ module "s3" {
     source = "./modules/s3"
 
     codepipeline_bucket_name = "beemsa-cicd-bucket"
-    terraform_state_bucket_name = "beemsa-terraform-state-bucket"
 }
 
 module "codecommit" {
@@ -364,7 +357,7 @@ module "codepipeline" {
     codepipeline_bucket_name         = module.s3.codepipeline_bucket_name
     codepipeline_role_arn            = module.iam.codepipeline_role_arn
 
-    source_stage_codecommit_name  = "CodeCommit_Source"
+    source_stage_codecommit_name  = "GitHub_Source"
     source_stage_output_artifacts = "SourceArtifacts"
     codecommit_repository_name    = module.codecommit.codecommit_repository_name
     codecommit_branch_name        = "master"

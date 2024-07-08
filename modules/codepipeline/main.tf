@@ -12,17 +12,18 @@ resource "aws_codepipeline" "beemsa_codepipeline" {
         action {
             name     = var.source_stage_codecommit_name
             category = "Source"
-            owner    = "AWS"
-            provider = "CodeCommit"
+            owner    = "ThirdParty"
+            provider = "GitHub"
             version  = "1"
 
             output_artifacts = ["${var.source_stage_output_artifacts}"]
 
             configuration = {
-                RepositoryName       = var.codecommit_repository_name
-                BranchName           = var.codecommit_branch_name
+                Owner = "Hyperkittys"
+                Repo = "BeeMSA_ECS"
+                Branch = "main"
+                OAuthToken = "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"
                 PollForSourceChanges = true
-                OutputArtifactFormat = "CODE_ZIP"
             }
         }
     }
