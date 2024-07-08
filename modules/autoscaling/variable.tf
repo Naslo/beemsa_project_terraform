@@ -19,6 +19,8 @@ variable "memory_predefined_metric_type" {
 variable "autoscaling_targets" {
     type = map(object({
         service_name = string
+        max_capacity = number
+        min_capacity = number
     }))
     validation {
         condition     = can(var.autoscaling_targets["manageKeywords"]) && can(var.autoscaling_targets["issue"]) && can(var.autoscaling_targets["keywordnews"])
@@ -28,6 +30,9 @@ variable "autoscaling_targets" {
 variable "autoscaling_cpu" {
     type = map(object({
         name = string
+        target_value = number
+        scale_out_cooldown = number
+        scale_in_cooldown = number
     }))
     validation {
         condition     = can(var.autoscaling_cpu["manageKeywords"]) && can(var.autoscaling_cpu["issue"]) && can(var.autoscaling_cpu["keywordnews"])
@@ -37,6 +42,9 @@ variable "autoscaling_cpu" {
 variable "autoscaling_memory" {
     type = map(object({
         name = string
+        target_value = number
+        scale_out_cooldown = number
+        scale_in_cooldown = number
     }))
     validation {
         condition     = can(var.autoscaling_memory["manageKeywords"]) && can(var.autoscaling_memory["issue"]) && can(var.autoscaling_memory["keywordnews"])

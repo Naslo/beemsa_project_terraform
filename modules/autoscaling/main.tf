@@ -1,8 +1,8 @@
 resource "aws_appautoscaling_target" "autoscaling_targets" {
     for_each = var.autoscaling_targets
 
-    max_capacity = 5
-    min_capacity = 1
+    max_capacity = each.value.max_capacity
+    min_capacity = each.value.min_capacity
     resource_id = "service/${var.ecs_cluster_name}/${each.value.service_name}"
     scalable_dimension = var.scalable_dimension
     service_namespace = var.autoscaling_service_namespace
@@ -21,9 +21,9 @@ resource "aws_appautoscaling_policy" "autoscaling_cpu" {
         predefined_metric_specification {
             predefined_metric_type = var.cpu_predefined_metric_type
         }
-        target_value = 70.0
-        scale_out_cooldown = 60
-        scale_in_cooldown = 60
+        target_value = each.value.target_value
+        scale_out_cooldown = each.value.scale_out_cooldown
+        scale_in_cooldown = each.value.scale_in_cooldown
     }
 }
 
@@ -40,8 +40,8 @@ resource "aws_appautoscaling_policy" "autoscaling_memory" {
         predefined_metric_specification {
             predefined_metric_type = var.memory_predefined_metric_type
         }
-        target_value = 70.0
-        scale_out_cooldown = 60
-        scale_in_cooldown = 60
+        target_value = each.value.target_value
+        scale_out_cooldown = each.value.scale_out_cooldown
+        scale_in_cooldown = each.value.scale_in_cooldown
     }
 }

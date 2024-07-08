@@ -1,9 +1,23 @@
 terraform {
     required_version = ">= 1.9, < 2.0"
+    backend "s3" {
+        bucket = "beemsa-terraform-state-bucket"
+        key = "terraform.tfstate"
+        region = "ap-northeast-2"
+        encrypt = true
+        dynamodb_table = "terraform_lock_table"
+    }
 }
 
 provider "aws" {
     region = var.region_kr
+}
+
+module "dynamodb" {
+    source = "./modules/dynamodb"
+
+    terraform_lock_table_name = "terraform_lock_table"
+    table_hash_key = "LockID"
 }
 
 module "vpc" {
@@ -56,7 +70,7 @@ module "iam" {
     ]
     ecs_task_execution_role_managed_policy_arns = [
         "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy",
-        "arn:aws:iam::aws:policy/CloudWatchFullAccess"
+        "arn:aws:iam::aws:policy/CloudWatchFullAccess" # 얘 남겨두기(지표는 최대로)
     ]
 
     # CICD 역할/정책
@@ -236,34 +250,58 @@ module "autoscaling" {
     autoscaling_targets = {
         "manageKeywords" = {
             service_name = module.ecs.manageKeywords_service_name
+            max_capacity = 5
+            min_capacity = 1
         }
         "issue" = {
             service_name = module.ecs.issue_service_name
+            max_capacity = 5
+            min_capacity = 1
         }
         "keywordnews" = {
             service_name = module.ecs.keywordnews_service_name
+            max_capacity = 5
+            min_capacity = 1
         }
     }
     autoscaling_cpu = {
         "manageKeywords" = {
             name = "manageKeywords_scale_cpu"
+            target_value = 70
+            scale_out_cooldown = 60
+            scale_in_cooldown = 60
         }
         "issue" = {
             name = "issue_scale_cpu"
+            target_value = 70
+            scale_out_cooldown = 60
+            scale_in_cooldown = 60
         }
         "keywordnews" = {
             name = "keywordnews_scale_cpu"
+            target_value = 70
+            scale_out_cooldown = 60
+            scale_in_cooldown = 60
         }
     }
     autoscaling_memory = {
         "manageKeywords" = {
             name = "manageKeywords_scale_memory"
+            target_value = 70
+            scale_out_cooldown = 60
+            scale_in_cooldown = 60
         }
         "issue" = {
             name = "issue_scale_memory"
+            target_value = 70
+            scale_out_cooldown = 60
+            scale_in_cooldown = 60
         }
         "keywordnews" = {
             name = "keywordnews_scale_memory"
+            target_value = 70
+            scale_out_cooldown = 60
+            scale_in_cooldown = 60
         }
     }
 }
@@ -272,6 +310,7 @@ module "s3" {
     source = "./modules/s3"
 
     codepipeline_bucket_name = "beemsa-cicd-bucket"
+    terraform_state_bucket_name = "beemsa-terraform-state-bucket"
 }
 
 module "codecommit" {
