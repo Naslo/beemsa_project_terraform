@@ -306,12 +306,6 @@ module "s3" {
     codepipeline_bucket_name = "beemsa-cicd-bucket"
 }
 
-module "codecommit" {
-    source = "./modules/codecommit"
-
-    codecommit_repository_name = "BeeMSA_ECS"
-}
-
 module "codebuild" {
     source = "./modules/codebuild"
     depends_on = [ 
@@ -359,7 +353,6 @@ module "codepipeline" {
 
     source_stage_codecommit_name  = "GitHub_Source"
     source_stage_output_artifacts = "SourceArtifacts"
-    codecommit_repository_name    = module.codecommit.codecommit_repository_name
     codecommit_branch_name        = "master"
 
     ecs_cluster_name       = module.ecs.cluster_name

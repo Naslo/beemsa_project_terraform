@@ -18,9 +18,6 @@ variable "source_stage_codecommit_name" {
 variable "source_stage_output_artifacts" {
     type = string
 }
-variable "codecommit_repository_name" {
-    type = string
-}
 variable "codecommit_branch_name" {
     type = string
 }
