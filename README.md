@@ -5,25 +5,25 @@
 프로젝트 끝나면 지울수도 냅둘수도 있으니 프로젝트 끝나면 
 소스들은 각자 알아서 챙겨두세요~
 
-폴더 구조
-C:
-│  .gitignore
-│  .terraform.lock.hcl
-│  main.tf
-│  README.md
-│  variable.tf
-│
-└─modules
-    ├─autoscaling
-    │      main.tf
-    │      variable.tf
-    │
-    ├─codebuild
-    │      main.tf
-    │      output.tf
-    │      variable.tf
-    │
-    ├─codepipeline
+폴더 구조  
+C:  
+│  .gitignore  
+│  .terraform.lock.hcl  
+│  main.tf  
+│  README.md  
+│  variable.tf  
+│  
+└─modules  
+    ├─autoscaling  
+    │      main.tf  
+    │      variable.tf  
+    │  
+    ├─codebuild  
+    │      main.tf  
+    │      output.tf  
+    │      variable.tf  
+    │  
+    ├─codepipeline  
     │      main.tf
     │      variable.tf
     │
