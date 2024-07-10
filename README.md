@@ -15,62 +15,17 @@ C:
 │  
 └─modules  
     ├─autoscaling  
-    │      main.tf  
-    │      variable.tf  
-    │  
     ├─codebuild  
-    │      main.tf  
-    │      output.tf  
-    │      variable.tf  
-    │  
     ├─codepipeline  
-    │      main.tf  
-    │      variable.tf  
-    │  
     ├─ecr  
-    │      main.tf  
-    │      output.tf  
-    │      variable.tf  
-    │  
     ├─ecs  
-    │      main.tf  
-    │      output.tf  
-    │      variable.tf  
-    │  
     ├─iam  
-    │      main.tf  
-    │      output.tf  
-    │      variable.tf  
-    │  
     ├─lb  
-    │      main.tf  
-    │      output.tf  
-    │      variable.tf  
-    │  
     ├─route53  
-    │      main.tf  
-    │      output.tf  
-    │      variable.tf  
-    │  
     ├─s3  
-    │      main.tf  
-    │      output.tf  
-    │      variable.tf  
-    │  
     ├─securityGroup  
-    │      main.tf  
-    │      output.tf  
-    │      variable.tf  
-    │  
     ├─targetGroup  
-    │      main.tf  
-    │      output.tf  
-    │      variable.tf  
-    │  
     └─vpc  
-            main.tf  
-            output.tf  
-            variable.tf  
   
 모듈별 설명  
 vpc - vpc, igw, nat, 서브넷, 라우팅테이블 설정  
