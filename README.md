@@ -14,18 +14,18 @@ C:
 │  variable.tf  
 │  
 └─modules  
-&nbsp;&nbsp;├─autoscaling  
-&nbsp;&nbsp;├─codebuild  
-&nbsp;&nbsp;├─codepipeline  
-&nbsp;&nbsp;├─ecr  
-&nbsp;&nbsp;├─ecs  
-&nbsp;&nbsp;├─iam  
-&nbsp;&nbsp;├─lb  
-&nbsp;&nbsp;├─route53  
-&nbsp;&nbsp;├─s3  
-&nbsp;&nbsp;├─securityGroup  
-&nbsp;&nbsp;├─targetGroup  
-&nbsp;&nbsp;└─vpc  
+　　├─autoscaling  
+　　├─codebuild  
+　　├─codepipeline  
+　　├─ecr  
+　　├─ecs  
+　　├─iam  
+　　├─lb  
+　　├─route53  
+　　├─s3  
+　　├─securityGroup  
+　　├─targetGroup  
+　　└─vpc  
   
 모듈별 설명  
 vpc - vpc, igw, nat, 서브넷, 라우팅테이블 설정  
