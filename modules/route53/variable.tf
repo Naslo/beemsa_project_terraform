@@ -7,5 +7,11 @@ variable "route53_record_name" {
 variable "alb_dns_name" {
     type = string
 }
+variable "continent_location_name" {
+    type = string
+}
+variable "continent_record_name" {
+    type = string
+}
 variable "alb_zone_id" {
 }

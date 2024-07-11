@@ -7,11 +7,11 @@
   
 폴더 구조  
 C:  
-│  .gitignore  
-│  .terraform.lock.hcl  
-│  main.tf  
-│  README.md  
-│  variable.tf  
+│　.gitignore  
+│　.terraform.lock.hcl  
+│　main.tf  
+│　README.md  
+│　variable.tf  
 │  
 └─modules  
 　　├─autoscaling  
