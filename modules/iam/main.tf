@@ -44,7 +44,7 @@ resource "aws_iam_role" "codebuild_role" {
             }
         ]
     })
-
+    
     managed_policy_arns = var.codebuild_role_managed_policy_arns
 }
 
@@ -63,8 +63,6 @@ resource "aws_iam_role" "codepipeline_role" {
             }
         ]
     })
-
-    managed_policy_arns = var.codepipeline_role_managed_policy_arns
 }
 
 resource "aws_iam_role_policy" "codebuild_role_policy" {
@@ -98,11 +96,6 @@ resource "aws_iam_role_policy" "codepipeline_role_policy" {
         Version = "2012-10-17",
         Statement = [
             {
-                "Effect": "Allow",
-                "Action": "iam:PassRole",
-                "Resource": "*"
-            },
-            {
                 Effect = "Allow",
                 Action = [
                     "s3:*",
@@ -110,7 +103,8 @@ resource "aws_iam_role_policy" "codepipeline_role_policy" {
                     "codebuild:*",
                     "codedeploy:*",
                     "ecs:*",
-                    "ecr:*"
+                    "ecr:*",
+                    "iam:PassRole"
                 ],
                 Resource = "*"
             }

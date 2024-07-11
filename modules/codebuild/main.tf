@@ -19,6 +19,12 @@ resource "aws_codebuild_project" "codebuild_projects" {
             value = var.github_token
             type  = "PLAINTEXT"
         }
+
+        environment_variable {
+            name  = "AWS_REGION"
+            value = var.aws_region
+            type  = "PLAINTEXT"
+        }
     }
 
     source {

@@ -15,7 +15,7 @@ provider "aws" {
 }
 
 provider "aws" {
-    region = "us-east-1"
+    region = var.region_us
     alias = "usa"
 }
 
@@ -38,14 +38,9 @@ module "iam_global" {
     # CICD 역할/정책
     codebuild_role_name    = "codebuild_role"
     codepipeline_role_name = "codepipeline_role"
-    
+
     codebuild_role_managed_policy_arns = [
-        "arn:aws:iam::aws:policy/AmazonS3FullAccess",
-        "arn:aws:iam::aws:policy/AWSCodeBuildAdminAccess",
-    ]
-    codepipeline_role_managed_policy_arns = [
-        "arn:aws:iam::aws:policy/AmazonS3FullAccess",
-        "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryFullAccess"
+        "arn:aws:iam::aws:policy/AWSCodeBuildDeveloperAccess"
     ]
 }
 
@@ -344,6 +339,7 @@ module "codebuild" {
     issue_codebuild_role_arn = module.iam_global.issue_codebuild_role_arn
     keywordnews_codebuild_role_arn = module.iam_global.keywordnews_codebuild_role_arn
     github_token = var.github_token
+    aws_region = var.region_kr
 }
 
 module "codepipeline" {
@@ -733,6 +729,7 @@ module "codebuild_usa" {
     issue_codebuild_role_arn = module.iam_global.issue_codebuild_role_arn
     keywordnews_codebuild_role_arn = module.iam_global.keywordnews_codebuild_role_arn
     github_token = var.github_token
+    aws_region = var.region_us
 }
 
 module "codepipeline_usa" {

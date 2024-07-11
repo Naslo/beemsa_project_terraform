@@ -12,6 +12,9 @@ variable "codebuild_projects" {
 variable "github_token" {
     type = string
 }
+variable "aws_region" {
+    type = string
+}
 variable "manageKeywords_codebuild_role_arn" {
 }
 variable "issue_codebuild_role_arn" {
