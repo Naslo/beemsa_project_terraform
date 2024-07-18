@@ -14,7 +14,6 @@ C:
 │　variable.tf  
 │  
 └─modules  
-　　├─autoscaling  
 　　├─codebuild  
 　　├─codepipeline  
 　　├─ecr  
