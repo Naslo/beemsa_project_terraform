@@ -200,6 +200,12 @@ module "ecs" {
     ecs_sg_ids          = module.security_groups.ecs_sg_ids
     subnets_private_ids = module.vpc.ecs_private_subnets
 
+    autoscaling_policy_type = "TargetTrackingScaling"
+    autoscaling_service_namespace = "ecs"
+    scalable_dimension = "ecs:service:DesiredCount"
+    cpu_predefined_metric_type = "ECSServiceAverageCPUUtilization"
+    memory_predefined_metric_type = "ECSServiceAverageMemoryUtilization"
+
     task_definitions = {
         "manageKeywords" = {
             family = "manageKeywords_task"
@@ -222,43 +228,20 @@ module "ecs" {
             name = "manageKeywords_service"
             load_balancer_target_group_arn = module.target_group.manageKeywords_TG.arn
             load_balancer_container_name = "manageKeyword_container"
+            max_capacity = 5
+            min_capacity = 1
         }
         "issue" = {
             name = "issue_service"
             load_balancer_target_group_arn = module.target_group.issue_TG.arn
             load_balancer_container_name = "issue_container"
+            max_capacity = 5
+            min_capacity = 1
         }
         "keywordnews" = {
             name = "keywordnews_service"
             load_balancer_target_group_arn = module.target_group.keywordnews_TG.arn
             load_balancer_container_name = "keywordnews_container"
-        }
-    }
-}
-
-module "autoscaling" {
-    source = "./modules/autoscaling"
-
-    ecs_cluster_name = module.ecs.cluster_name
-    autoscaling_policy_type = "TargetTrackingScaling"
-    autoscaling_service_namespace = "ecs"
-    scalable_dimension = "ecs:service:DesiredCount"
-    cpu_predefined_metric_type = "ECSServiceAverageCPUUtilization"
-    memory_predefined_metric_type = "ECSServiceAverageMemoryUtilization"
-
-    autoscaling_targets = {
-        "manageKeywords" = {
-            service_name = module.ecs.manageKeywords_service_name
-            max_capacity = 5
-            min_capacity = 1
-        }
-        "issue" = {
-            service_name = module.ecs.issue_service_name
-            max_capacity = 5
-            min_capacity = 1
-        }
-        "keywordnews" = {
-            service_name = module.ecs.keywordnews_service_name
             max_capacity = 5
             min_capacity = 1
         }
@@ -267,40 +250,20 @@ module "autoscaling" {
         "manageKeywords" = {
             name = "manageKeywords_scale_cpu"
             target_value = 70
-            scale_out_cooldown = 60
-            scale_in_cooldown = 60
+            scale_out_cooldown = 30
+            scale_in_cooldown = 30
         }
         "issue" = {
             name = "issue_scale_cpu"
             target_value = 70
-            scale_out_cooldown = 60
-            scale_in_cooldown = 60
+            scale_out_cooldown = 30
+            scale_in_cooldown = 30
         }
         "keywordnews" = {
             name = "keywordnews_scale_cpu"
             target_value = 70
-            scale_out_cooldown = 60
-            scale_in_cooldown = 60
-        }
-    }
-    autoscaling_memory = {
-        "manageKeywords" = {
-            name = "manageKeywords_scale_memory"
-            target_value = 70
-            scale_out_cooldown = 60
-            scale_in_cooldown = 60
-        }
-        "issue" = {
-            name = "issue_scale_memory"
-            target_value = 70
-            scale_out_cooldown = 60
-            scale_in_cooldown = 60
-        }
-        "keywordnews" = {
-            name = "keywordnews_scale_memory"
-            target_value = 70
-            scale_out_cooldown = 60
-            scale_in_cooldown = 60
+            scale_out_cooldown = 30
+            scale_in_cooldown = 30
         }
     }
 }
@@ -402,7 +365,7 @@ module "codepipeline" {
         }
     }
 }
-
+/*
 #멀티 리전(미국 동부(us-east-1))
 module "vpc_usa" {
     source = "./modules/vpc"
@@ -667,26 +630,6 @@ module "autoscaling_usa" {
             scale_in_cooldown = 60
         }
     }
-    autoscaling_memory = {
-        "manageKeywords" = {
-            name = "manageKeywords_scale_memory"
-            target_value = 70
-            scale_out_cooldown = 60
-            scale_in_cooldown = 60
-        }
-        "issue" = {
-            name = "issue_scale_memory"
-            target_value = 70
-            scale_out_cooldown = 60
-            scale_in_cooldown = 60
-        }
-        "keywordnews" = {
-            name = "keywordnews_scale_memory"
-            target_value = 70
-            scale_out_cooldown = 60
-            scale_in_cooldown = 60
-        }
-    }
 }
 
 module "s3_usa" {
@@ -794,4 +737,4 @@ module "codepipeline_usa" {
             service_name  = module.ecs_usa.keywordnews_service_name
         }
     }
-}
+}*/

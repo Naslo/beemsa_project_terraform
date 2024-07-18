@@ -9,6 +9,21 @@ variable "subnets_private_ids" {
 }
 variable "ecs_sg_ids" {
 }
+variable "autoscaling_policy_type" {
+    type = string
+}
+variable "autoscaling_service_namespace" {
+    type = string
+}
+variable "scalable_dimension" {
+    type = string
+}
+variable "cpu_predefined_metric_type" {
+    type = string
+}
+variable "memory_predefined_metric_type" {
+    type = string
+}
 variable "task_definitions" {
     type = map(object({
         family = string
@@ -25,9 +40,23 @@ variable "ecs_services" {
         name = string
         load_balancer_target_group_arn = string
         load_balancer_container_name = string
+        max_capacity = number
+        min_capacity = number
     }))
     validation {
         condition     = can(var.ecs_services["manageKeywords"]) && can(var.ecs_services["issue"]) && can(var.ecs_services["keywordnews"])
         error_message = "ecs_services must include manageKeywords, issue, and keywordnews"
+    }
+}
+variable "autoscaling_cpu" {
+    type = map(object({
+        name = string
+        target_value = number
+        scale_out_cooldown = number
+        scale_in_cooldown = number
+    }))
+    validation {
+        condition     = can(var.autoscaling_cpu["manageKeywords"]) && can(var.autoscaling_cpu["issue"]) && can(var.autoscaling_cpu["keywordnews"])
+        error_message = "autoscaling_cpu must include manageKeywords, issue, and keywordnews"
     }
 }
