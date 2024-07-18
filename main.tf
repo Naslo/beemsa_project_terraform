@@ -230,6 +230,10 @@ module "ecs" {
             load_balancer_container_name = "manageKeyword_container"
             max_capacity = 5
             min_capacity = 1
+            autoscaling_name = "manageKeywords_scale_cpu"
+            target_value = 70
+            scale_out_cooldown = 30
+            scale_in_cooldown = 30
         }
         "issue" = {
             name = "issue_service"
@@ -237,6 +241,10 @@ module "ecs" {
             load_balancer_container_name = "issue_container"
             max_capacity = 5
             min_capacity = 1
+            autoscaling_name = "issue_scale_cpu"
+            target_value = 70
+            scale_out_cooldown = 30
+            scale_in_cooldown = 30
         }
         "keywordnews" = {
             name = "keywordnews_service"
@@ -244,23 +252,7 @@ module "ecs" {
             load_balancer_container_name = "keywordnews_container"
             max_capacity = 5
             min_capacity = 1
-        }
-    }
-    autoscaling_cpu = {
-        "manageKeywords" = {
-            name = "manageKeywords_scale_cpu"
-            target_value = 70
-            scale_out_cooldown = 30
-            scale_in_cooldown = 30
-        }
-        "issue" = {
-            name = "issue_scale_cpu"
-            target_value = 70
-            scale_out_cooldown = 30
-            scale_in_cooldown = 30
-        }
-        "keywordnews" = {
-            name = "keywordnews_scale_cpu"
+            autoscaling_name = "keywordnews_scale_cpu"
             target_value = 70
             scale_out_cooldown = 30
             scale_in_cooldown = 30

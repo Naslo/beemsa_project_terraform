@@ -92,12 +92,12 @@ resource "aws_appautoscaling_target" "autoscaling_targets" {
 }
 
 resource "aws_appautoscaling_policy" "autoscaling_cpu" {
-    for_each = var.autoscaling_cpu
+    for_each = var.ecs_services
 
-    name = each.value.name
+    name = each.value.autoscaling_name
     policy_type = var.autoscaling_policy_type
     service_namespace = var.autoscaling_service_namespace
-    resource_id = aws_appautoscaling_target.autoscaling_targets[each.key].resource_id
+    resource_id = "service/${var.ecs_cluster_name}/${each.value.name}"
     scalable_dimension = var.scalable_dimension
     
     target_tracking_scaling_policy_configuration {
