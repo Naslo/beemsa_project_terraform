@@ -522,104 +522,75 @@ module "ecs_usa" {
     providers = {
         aws = aws.usa
     }
-
     depends_on = [
-        module.lb_usa,
+        module.lb,
         module.iam_global,
-        module.target_group_usa
+        module.target_group
     ]
     
     ecs_cluster_name    = "beemsa_cluster"
     ecs_task_role_arn           = module.iam_global.ecs_task_role_arn
     ecs_task_execution_role_arn = module.iam_global.ecs_task_execution_role_arn
 
-    ecs_sg_ids          = module.security_groups_usa.ecs_sg_ids
-    subnets_private_ids = module.vpc_usa.ecs_private_subnets
+    ecs_sg_ids          = module.security_groups.ecs_sg_ids
+    subnets_private_ids = module.vpc.ecs_private_subnets
 
-    task_definitions = {
-        "manageKeywords" = {
-            family = "manageKeywords_task"
-            container_definitions_name = "manageKeyword_container"
-            container_definitions_image = module.ecr_usa.manageKeywords_repository_url
-        }
-        "issue" = {
-            family = "issue_task"
-            container_definitions_name = "issue_container"
-            container_definitions_image = module.ecr_usa.issue_repository_url
-        }
-        "keywordnews" = {
-            family = "keywordnews_task"
-            container_definitions_name = "keywordnews_container"
-            container_definitions_image = module.ecr_usa.keywordnews_repository_url
-        }
-    }
-    ecs_services = {
-        "manageKeywords" = {
-            name = "manageKeywords_service"
-            load_balancer_target_group_arn = module.target_group_usa.manageKeywords_TG.arn
-            load_balancer_container_name = "manageKeyword_container"
-        }
-        "issue" = {
-            name = "issue_service"
-            load_balancer_target_group_arn = module.target_group_usa.issue_TG.arn
-            load_balancer_container_name = "issue_container"
-        }
-        "keywordnews" = {
-            name = "keywordnews_service"
-            load_balancer_target_group_arn = module.target_group_usa.keywordnews_TG.arn
-            load_balancer_container_name = "keywordnews_container"
-        }
-    }
-}
-
-module "autoscaling_usa" {
-    source = "./modules/autoscaling"
-    providers = {
-        aws = aws.usa
-    }
-
-    ecs_cluster_name = module.ecs_usa.cluster_name
     autoscaling_policy_type = "TargetTrackingScaling"
     autoscaling_service_namespace = "ecs"
     scalable_dimension = "ecs:service:DesiredCount"
     cpu_predefined_metric_type = "ECSServiceAverageCPUUtilization"
     memory_predefined_metric_type = "ECSServiceAverageMemoryUtilization"
 
-    autoscaling_targets = {
+    task_definitions = {
         "manageKeywords" = {
-            service_name = module.ecs_usa.manageKeywords_service_name
-            max_capacity = 5
-            min_capacity = 1
+            family = "manageKeywords_task"
+            container_definitions_name = "manageKeyword_container"
+            container_definitions_image = module.ecr.manageKeywords_repository_url
         }
         "issue" = {
-            service_name = module.ecs_usa.issue_service_name
-            max_capacity = 5
-            min_capacity = 1
+            family = "issue_task"
+            container_definitions_name = "issue_container"
+            container_definitions_image = module.ecr.issue_repository_url
         }
         "keywordnews" = {
-            service_name = module.ecs_usa.keywordnews_service_name
-            max_capacity = 5
-            min_capacity = 1
+            family = "keywordnews_task"
+            container_definitions_name = "keywordnews_container"
+            container_definitions_image = module.ecr.keywordnews_repository_url
         }
     }
-    autoscaling_cpu = {
+    ecs_services = {
         "manageKeywords" = {
-            name = "manageKeywords_scale_cpu"
+            name = "manageKeywords_service"
+            load_balancer_target_group_arn = module.target_group.manageKeywords_TG.arn
+            load_balancer_container_name = "manageKeyword_container"
+            max_capacity = 5
+            min_capacity = 1
+            autoscaling_name = "manageKeywords_scale_cpu"
             target_value = 70
-            scale_out_cooldown = 60
-            scale_in_cooldown = 60
+            scale_out_cooldown = 30
+            scale_in_cooldown = 30
         }
         "issue" = {
-            name = "issue_scale_cpu"
+            name = "issue_service"
+            load_balancer_target_group_arn = module.target_group.issue_TG.arn
+            load_balancer_container_name = "issue_container"
+            max_capacity = 5
+            min_capacity = 1
+            autoscaling_name = "issue_scale_cpu"
             target_value = 70
-            scale_out_cooldown = 60
-            scale_in_cooldown = 60
+            scale_out_cooldown = 30
+            scale_in_cooldown = 30
         }
         "keywordnews" = {
-            name = "keywordnews_scale_cpu"
+            name = "keywordnews_service"
+            load_balancer_target_group_arn = module.target_group.keywordnews_TG.arn
+            load_balancer_container_name = "keywordnews_container"
+            max_capacity = 5
+            min_capacity = 1
+            autoscaling_name = "keywordnews_scale_cpu"
             target_value = 70
-            scale_out_cooldown = 60
-            scale_in_cooldown = 60
+            scale_out_cooldown = 30
+            scale_in_cooldown = 30
         }
     }
 }
