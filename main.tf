@@ -19,6 +19,47 @@ provider "aws" {
     alias = "usa"
 }
 
+module "global" {
+    source = "./global"
+}
+
+module "kr" {
+    depends_on = [ 
+        module.global
+     ]
+    source = "./regions/ap-northeast-2"
+
+    github_token = var.github_token
+    region = var.region_kr
+
+    ecs_task_role_arn = module.global.ecs_task_role_arn
+    ecs_task_execution_role_arn = module.global.ecs_task_execution_role_arn
+    manageKeywords_codebuild_role_arn = module.global.manageKeywords_codebuild_role_arn
+    issue_codebuild_role_arn = module.global.issue_codebuild_role_arn
+    keywordnews_codebuild_role_arn = module.global.keywordnews_codebuild_role_arn
+    codepipeline_role_arn = module.global.codepipeline_role_arn
+}
+
+module "usa" {
+    providers = {
+      aws = aws.usa
+    }
+    depends_on = [ 
+        module.global
+    ]
+    source = "./regions/us-east-1"
+
+    github_token = var.github_token
+    region = var.region_us
+
+    ecs_task_role_arn = module.global.ecs_task_role_arn
+    ecs_task_execution_role_arn = module.global.ecs_task_execution_role_arn
+    manageKeywords_codebuild_role_arn = module.global.manageKeywords_codebuild_role_arn
+    issue_codebuild_role_arn = module.global.issue_codebuild_role_arn
+    keywordnews_codebuild_role_arn = module.global.keywordnews_codebuild_role_arn
+    codepipeline_role_arn = module.global.codepipeline_role_arn
+}
+/*
 # 글로벌 사용
 module "iam_global" {
     source = "./modules/iam"
@@ -357,7 +398,7 @@ module "codepipeline" {
         }
     }
 }
-/*
+
 #멀티 리전(미국 동부(us-east-1))
 module "vpc_usa" {
     source = "./modules/vpc"
@@ -523,17 +564,17 @@ module "ecs_usa" {
         aws = aws.usa
     }
     depends_on = [
-        module.lb,
+        module.lb_usa,
         module.iam_global,
-        module.target_group
+        module.target_group_usa
     ]
     
     ecs_cluster_name    = "beemsa_cluster"
     ecs_task_role_arn           = module.iam_global.ecs_task_role_arn
     ecs_task_execution_role_arn = module.iam_global.ecs_task_execution_role_arn
 
-    ecs_sg_ids          = module.security_groups.ecs_sg_ids
-    subnets_private_ids = module.vpc.ecs_private_subnets
+    ecs_sg_ids          = module.security_groups_usa.ecs_sg_ids
+    subnets_private_ids = module.vpc_usa.ecs_private_subnets
 
     autoscaling_policy_type = "TargetTrackingScaling"
     autoscaling_service_namespace = "ecs"
@@ -545,23 +586,23 @@ module "ecs_usa" {
         "manageKeywords" = {
             family = "manageKeywords_task"
             container_definitions_name = "manageKeyword_container"
-            container_definitions_image = module.ecr.manageKeywords_repository_url
+            container_definitions_image = module.ecr_usa.manageKeywords_repository_url
         }
         "issue" = {
             family = "issue_task"
             container_definitions_name = "issue_container"
-            container_definitions_image = module.ecr.issue_repository_url
+            container_definitions_image = module.ecr_usa.issue_repository_url
         }
         "keywordnews" = {
             family = "keywordnews_task"
             container_definitions_name = "keywordnews_container"
-            container_definitions_image = module.ecr.keywordnews_repository_url
+            container_definitions_image = module.ecr_usa.keywordnews_repository_url
         }
     }
     ecs_services = {
         "manageKeywords" = {
             name = "manageKeywords_service"
-            load_balancer_target_group_arn = module.target_group.manageKeywords_TG.arn
+            load_balancer_target_group_arn = module.target_group_usa.manageKeywords_TG.arn
             load_balancer_container_name = "manageKeyword_container"
             max_capacity = 5
             min_capacity = 1
@@ -572,7 +613,7 @@ module "ecs_usa" {
         }
         "issue" = {
             name = "issue_service"
-            load_balancer_target_group_arn = module.target_group.issue_TG.arn
+            load_balancer_target_group_arn = module.target_group_usa.issue_TG.arn
             load_balancer_container_name = "issue_container"
             max_capacity = 5
             min_capacity = 1
@@ -583,7 +624,7 @@ module "ecs_usa" {
         }
         "keywordnews" = {
             name = "keywordnews_service"
-            load_balancer_target_group_arn = module.target_group.keywordnews_TG.arn
+            load_balancer_target_group_arn = module.target_group_usa.keywordnews_TG.arn
             load_balancer_container_name = "keywordnews_container"
             max_capacity = 5
             min_capacity = 1
