@@ -8,6 +8,5 @@ variable "region_us" {
 }
 variable "github_token" {
     type = string
-    sensitive   = true
-    default = "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"
+    sensitive = true
 }
