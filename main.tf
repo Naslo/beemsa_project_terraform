@@ -21,6 +21,8 @@ provider "aws" {
 
 module "global" {
     source = "./global"
+
+    account_id = var.account_id
 }
 
 module "kr" {
