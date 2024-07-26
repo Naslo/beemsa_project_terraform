@@ -5,7 +5,7 @@
 프로젝트 끝나면 지울수도 냅둘수도 있으니 프로젝트 끝나면 
 소스들은 각자 알아서 챙겨두세요~
   
-폴더 구조  
+## 폴더 구조  
 C:  
 │　.gitignore  
 │　.terraform.lock.hcl  
@@ -26,7 +26,7 @@ C:
 　　├─targetGroup  
 　　└─vpc  
   
-모듈별 설명  
+## 모듈별 설명  
 vpc - vpc, igw, nat, 서브넷, 라우팅테이블 설정  
 securityGroup - ALB 보안그룹, ECS 보안그룹 설정  
 iam - ECS 역할/정책, CICD 역할/정책 설정  
