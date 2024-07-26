@@ -80,12 +80,12 @@ resource "aws_iam_role_policy" "codebuild_role_policy" {
                     "logs:PutLogEvents"
                 ],
                 "Resource": [
-                    "arn:aws:logs:ap-northeast-2:${account_id}:log-group:/aws/codebuild/manageKeywords_codebuild",
-                    "arn:aws:logs:ap-northeast-2:${account_id}:log-group:/aws/codebuild/manageKeywords_codebuild:*",
-                    "arn:aws:logs:ap-northeast-2:${account_id}:log-group:/aws/codebuild/issue_codebuild",
-                    "arn:aws:logs:ap-northeast-2:${account_id}:log-group:/aws/codebuild/issue_codebuild:*",
-                    "arn:aws:logs:ap-northeast-2:${account_id}:log-group:/aws/codebuild/keywordnews_codebuild",
-                    "arn:aws:logs:ap-northeast-2:${account_id}:log-group:/aws/codebuild/keywordnews_codebuild:*"
+                    "arn:aws:logs:ap-northeast-2:${var.account_id}:log-group:/aws/codebuild/manageKeywords_codebuild",
+                    "arn:aws:logs:ap-northeast-2:${var.account_id}:log-group:/aws/codebuild/manageKeywords_codebuild:*",
+                    "arn:aws:logs:ap-northeast-2:${var.account_id}:log-group:/aws/codebuild/issue_codebuild",
+                    "arn:aws:logs:ap-northeast-2:${var.account_id}:log-group:/aws/codebuild/issue_codebuild:*",
+                    "arn:aws:logs:ap-northeast-2:${var.account_id}:log-group:/aws/codebuild/keywordnews_codebuild",
+                    "arn:aws:logs:ap-northeast-2:${var.account_id}:log-group:/aws/codebuild/keywordnews_codebuild:*"
                 ]
             },
             {
@@ -114,12 +114,12 @@ resource "aws_iam_role_policy" "codebuild_role_policy" {
                     "codebuild:BatchPutCodeCoverages"
                 ],
                 "Resource": [
-                    "arn:aws:codebuild:ap-northeast-2:${account_id}:report-group/manageKeywords_codebuild",
-                    "arn:aws:codebuild:ap-northeast-2:${account_id}:report-group/manageKeywords_codebuild:*",
-                    "arn:aws:codebuild:ap-northeast-2:${account_id}:report-group/issue_codebuild",
-                    "arn:aws:codebuild:ap-northeast-2:${account_id}:report-group/issue_codebuild:*",
-                    "arn:aws:codebuild:ap-northeast-2:${account_id}:report-group/keywordnews_codebuild",
-                    "arn:aws:codebuild:ap-northeast-2:${account_id}:report-group/keywordnews_codebuild:*"
+                    "arn:aws:codebuild:ap-northeast-2:${var.account_id}:report-group/manageKeywords_codebuild",
+                    "arn:aws:codebuild:ap-northeast-2:${var.account_id}:report-group/manageKeywords_codebuild:*",
+                    "arn:aws:codebuild:ap-northeast-2:${var.account_id}:report-group/issue_codebuild",
+                    "arn:aws:codebuild:ap-northeast-2:${var.account_id}:report-group/issue_codebuild:*",
+                    "arn:aws:codebuild:ap-northeast-2:${var.account_id}:report-group/keywordnews_codebuild",
+                    "arn:aws:codebuild:ap-northeast-2:${var.account_id}:report-group/keywordnews_codebuild:*"
                 ]
             },
             {
@@ -134,7 +134,7 @@ resource "aws_iam_role_policy" "codebuild_role_policy" {
                     "ecr:PutImage"
                 ],
                 "Resource": [
-                    "arn:aws:ecr:ap-northeast-2:${account_id}:repository/*"
+                    "arn:aws:ecr:ap-northeast-2:${var.account_id}:repository/*"
                 ]
             }
         ]
@@ -173,15 +173,15 @@ resource "aws_iam_role_policy" "codepipeline_role_policy" {
                     "ecs:RunTask"
                 ],
                 "Resource": [
-                    "arn:aws:ecs:ap-northeast-2:${account_id}:cluster/beemsa_cluster",
-                    "arn:aws:ecs:ap-northeast-2:${account_id}:service/beemsa_cluster/issue_service",
-                    "arn:aws:ecs:ap-northeast-2:${account_id}:service/beemsa_cluster/keywordnews_service",
-                    "arn:aws:ecs:ap-northeast-2:${account_id}:service/beemsa_cluster/manageKeywords_service",
-                    "arn:aws:ecs:ap-northeast-2:${account_id}:task-definition/issue_task",
-                    "arn:aws:ecs:ap-northeast-2:${account_id}:task-definition/keywordnews_task",
-                    "arn:aws:ecs:ap-northeast-2:${account_id}:task-definition/manageKeywords_task",
-                    "arn:aws:iam::${account_id}:role/ecs_task_role",
-                    "arn:aws:iam::${account_id}:role/ecs_task_execution_role"
+                    "arn:aws:ecs:ap-northeast-2:${var.account_id}:cluster/beemsa_cluster",
+                    "arn:aws:ecs:ap-northeast-2:${var.account_id}:service/beemsa_cluster/issue_service",
+                    "arn:aws:ecs:ap-northeast-2:${var.account_id}:service/beemsa_cluster/keywordnews_service",
+                    "arn:aws:ecs:ap-northeast-2:${var.account_id}:service/beemsa_cluster/manageKeywords_service",
+                    "arn:aws:ecs:ap-northeast-2:${var.account_id}:task-definition/issue_task",
+                    "arn:aws:ecs:ap-northeast-2:${var.account_id}:task-definition/keywordnews_task",
+                    "arn:aws:ecs:ap-northeast-2:${var.account_id}:task-definition/manageKeywords_task",
+                    "arn:aws:iam::${var.account_id}:role/ecs_task_role",
+                    "arn:aws:iam::${var.account_id}:role/ecs_task_execution_role"
                 ]
             },
             {
