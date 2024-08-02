@@ -13,21 +13,21 @@ C:
 │  
 ├─ global  
 ├─ regions  
-│　 ├─ap-northeast-2  
-│　 └─us-east-1  
+│　 ├─ ap-northeast-2  
+│　 └─ us-east-1  
 │  
-└─modules  
-　　├─codebuild  
-　　├─codepipeline  
-　　├─ecr  
-　　├─ecs  
-　　├─iam  
-　　├─lb  
-　　├─route53  
-　　├─s3  
-　　├─securityGroup  
-　　├─targetGroup  
-　　└─vpc  
+└─ modules  
+　　├─ codebuild  
+　　├─ codepipeline  
+　　├─ ecr  
+　　├─ ecs  
+　　├─ iam  
+　　├─ lb  
+　　├─ route53  
+　　├─ s3  
+　　├─ securityGroup  
+　　├─ targetGroup  
+　　└─ vpc  
   
 ## 모듈별 설명
 vpc - vpc, igw, nat, 서브넷, 라우팅테이블 설정  
