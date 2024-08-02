@@ -11,6 +11,11 @@ C:
 │　README.md  
 │　variable.tf  
 │  
+├─ global
+├─ regions
+│　　├─ap-northeast-2  
+│　　└─us-east-1  
+│  
 └─modules  
 　　├─codebuild  
 　　├─codepipeline  
@@ -36,3 +41,7 @@ ecs - 클러스터, 태스크 정의, 서비스, 오토스케일링 설정
 s3 - cicd용 버켓 설정  
 codebuild - 코드 빌드 설정  
 codepipeline - 코드 파이프라인 설정(github - Codebuild - ECS 배포)  
+
+## 멀티리전화
+global - iam 모듈 정의  
+regions - 리전별로 나머지 모듈 정의  
