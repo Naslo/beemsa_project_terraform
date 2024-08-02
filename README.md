@@ -11,8 +11,8 @@ C:
 │　README.md  
 │　variable.tf  
 │  
-├─ global
-├─ regions
+├─ global  
+├─ regions  
 │　　├─ap-northeast-2  
 │　　└─us-east-1  
 │  
