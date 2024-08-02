@@ -41,7 +41,7 @@ module "kr" {
     keywordnews_codebuild_role_arn = module.global.keywordnews_codebuild_role_arn
     codepipeline_role_arn = module.global.codepipeline_role_arn
 }
-/*
+
 module "usa" {
     providers = {
       aws = aws.usa
@@ -60,4 +60,4 @@ module "usa" {
     issue_codebuild_role_arn = module.global.issue_codebuild_role_arn
     keywordnews_codebuild_role_arn = module.global.keywordnews_codebuild_role_arn
     codepipeline_role_arn = module.global.codepipeline_role_arn
-}*/
+}
