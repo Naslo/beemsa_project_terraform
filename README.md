@@ -13,8 +13,8 @@ C:
 │  
 ├─ global  
 ├─ regions  
-│　　├─ap-northeast-2  
-│　　└─us-east-1  
+│　 ├─ap-northeast-2  
+│　 └─us-east-1  
 │  
 └─modules  
 　　├─codebuild  
